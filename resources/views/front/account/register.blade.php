@@ -55,14 +55,20 @@
 $("#registrationForm").submit(function(event){
     event.preventDefault();
 
+    $("button[type='submit']").prop('disable',true);
+
     $.ajax({
         url:'{{route("account.processRegister")}}',
         type:'post',
         data:$(this).serializeArray(),
         dataType:'json',
         success: function(response){ 
+            $("button[type='submit']").prop('disable',false);
+
             var errors=response.errors;
-            //name error message
+            
+            if(response.status == false){
+                //name error message
             if(errors.name){
                 $("#name").siblings("p").addClass('invalid-feedback').html(errors.name);
                 $("#name").addClass('is-invalid');
@@ -82,7 +88,6 @@ $("#registrationForm").submit(function(event){
             }
 
              //password error message
-
             if(errors.password){
                 $("#password").siblings("p").addClass('invalid-feedback').html(errors.password);
                 $("#password").addClass('is-invalid');
@@ -90,6 +95,22 @@ $("#registrationForm").submit(function(event){
                 $("#password").siblings("p").removeClass('invalid-feedback').html('');
                 $("#password").removeClass('is-invalid');
             }
+                
+            } else{
+                $("#name").siblings("p").removeClass('invalid-feedback').html('');
+                $("#name").removeClass('is-invalid');
+
+                $("#email").siblings("p").removeClass('invalid-feedback').html('');
+                $("#email").removeClass('is-invalid');
+
+                $("#password").siblings("p").removeClass('invalid-feedback').html('');
+                $("#password").removeClass('is-invalid');
+
+
+                window.location.href="{{ route('account.login')}}";
+
+            }
+            
         },
         error: function(jQXHR, execption){
             console.log("Something went wrong");
