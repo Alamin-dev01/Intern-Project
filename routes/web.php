@@ -150,9 +150,9 @@ Route::group(['prefix'=>'admin'], function(){
        // Route::get('/product-subcategories', [ProductSubCategoryController::class, 'index'])-> name('product-subcategories.index');
         Route::post ('/coupons', [DiscountCodeController::class, 'store'])-> name('coupons.store');
         Route::get('/coupons', [DiscountCodeController::class, 'index'])-> name('coupons.index');
-        // Route::get ('/products/{product}/edit', [ProductController::class, 'edit'])-> name('products.edit');
-        // Route::put ('/products/{product}', [ProductController::class, 'update'])-> name('products.update');
-        // Route::delete ('/products/{product}', [ProductController::class, 'destroy'])-> name('products.delete');
+        Route::get ('/coupons/{coupon}/edit', [DiscountCodeController::class, 'edit'])-> name('coupons.edit');
+        Route::put ('/coupons/{coupon}', [DiscountCodeController::class, 'update'])-> name('coupons.update');
+        Route::delete ('/coupons/{coupon}', [DiscountCodeController::class, 'destroy'])-> name('coupons.delete');
         // Route::get('/get-products',[ProductController::class,'getProducts'])->name('products.getProducts');
 
 

@@ -126,7 +126,7 @@
         var newUrl= url.replace("ID", id)
         
         
-        if (confirm("Are ypu sure, you want to delete?")){
+        if (confirm("Are you sure, you want to delete?")){
             $.ajax({
             url: newUrl,
             type: 'delete',
