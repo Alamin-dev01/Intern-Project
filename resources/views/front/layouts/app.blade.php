@@ -59,7 +59,14 @@
 				</a>
 			</div>
 			<div class="col-lg-6 col-6 text-left  d-flex justify-content-end align-items-center">
-				<a href="account.php" class="nav-link text-dark">My Account</a>
+				@if (Auth::check())
+				<a href="{{ route('account.profile') }}" class="nav-link text-dark">My Account</a>
+
+				@else
+				<a href="{{ route('account.login') }}" class="nav-link text-dark">Login/Register</a>
+
+					
+				@endif
 				<form action="">					
 					<div class="input-group">
 						<input type="text" placeholder="Search For Products" class="form-control" aria-label="Amount (to the nearest dollar)">
@@ -174,6 +181,28 @@
 		</div>
 	</div>
 </footer>
+<!-- Wishlist modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+	Launch demo modal
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="wishlistModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title" id="exampleModalLabel">Success</h5>
+		  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		</div>
+		<div class="modal-body" >
+		
+		</div>
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+		</div>
+	  </div>
+	</div>
+  </div>
 <script src="{{asset('front-assets/js/jquery-3.6.0.min.js')}}"></script>
 <script src="{{asset('front-assets/js/bootstrap.bundle.5.1.3.min.js')}}"></script>
 <script src="{{asset('front-assets/js/instantpages.5.1.0.min.js')}}"></script>
@@ -201,8 +230,7 @@ $.ajaxSetup({
 			}
 		});
 
-		function addToCart(id){
-
+function addToCart(id){
 $.ajax({
 	url:'{{ route("front.addToCart") }}',
 	type:'post',
@@ -221,6 +249,33 @@ $.ajax({
 });
 
 }
+
+
+function addToWishlist(id){
+	$.ajax({
+		url: '{{ route("front.addToWishlist") }}',  // Correct route reference
+		type: 'post',
+		data: { id: id },
+		headers: {
+			'X-CSRF-TOKEN': '{{ csrf_token() }}'   // CSRF token for security
+		},
+		dataType: 'json',
+		success: function(response) {
+			// Success logic here
+			if (response.status == true) {
+				$("#wishlistModel .modal-body").html(response.message);
+				$("#wishlistModel").modal('show');
+			
+		    } else{
+				window.location.href= "{{ route('account.login') }}";
+			  //alert(response.message);
+		    }
+		}
+	});
+}
+
+
+
 </script>
 
 @yield('customJs')

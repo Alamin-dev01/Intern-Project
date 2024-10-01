@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\BrandController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\DiscountCodeController;
 use App\Http\Controllers\admin\HomeController;
+use App\Http\Controllers\admin\OrderController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\ProductImageController;
 use App\Http\Controllers\admin\ProductSubCategoryController;
@@ -34,6 +35,10 @@ use Illuminate\Auth;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+// Route::get('/test', function () {
+//     orderEmail(19);
+
+// });
 
 Route::get('/',[FrontController::class,'index'])->name('front.home');
 Route::get('/shop/{categorySlug?}/{subCategorySlug?}',[ShopController::class,'index'])->name('front.shop');
@@ -46,6 +51,11 @@ Route::get('/checkout',[CartController::class,'checkout'])->name('front.checkout
 Route::post('/process-checkout',[CartController::class,'processCheckout'])->name('front.processCheckout');
 Route::get('/thanks/{orderId}',[CartController::class,'thankyou'])->name('front.thankyou');
 Route::post('/get-order-summery',[CartController::class,'getOrderSummery'])->name('front.getOrderSummery');
+Route::post('/apply-discount',[CartController::class,'applyDiscount'])->name('front.applyDiscount');
+Route::post('/remove-discount',[CartController::class,'removeCoupon'])->name('front.removeCoupon');
+
+Route::post('/add-to-wishlist',[FrontController::class,'addToWishlist'])->name('front.addToWishlist');
+
 
 
 
@@ -66,7 +76,12 @@ Route::group(['prefix'=>'account'],function(){
     
     Route::group(['middleware'=>'auth'],function(){
         Route::get('/profile',[AuthController::class,'profile'])->name('account.profile');
+        Route::get('/my-orders',[AuthController::class,'orders'])->name('account.orders');
+        Route::get('/my-wishlist',[AuthController::class,'wishlist'])->name('account.wishlist');
+        Route::post('/remove-product-from-wishlist',[AuthController::class,'removeProductFromWishlist'])->name('account.removeProductFromWishlist');
+        Route::get('/order-detail/{orderId}',[AuthController::class,'orderDetail'])->name('account.orderDetail');
         Route::get('/logout',[AuthController::class,'logout'])->name('account.logout');
+
     });
 
 });
@@ -126,12 +141,6 @@ Route::group(['prefix'=>'admin'], function(){
         Route::put ('/products/{product}', [ProductController::class, 'update'])-> name('products.update');
         Route::delete ('/products/{product}', [ProductController::class, 'destroy'])-> name('products.delete');
         Route::get('/get-products',[ProductController::class,'getProducts'])->name('products.getProducts');
-
-
-
-
-
-        
         Route::post ('/product-images/update', [ProductImageController::class, 'update'])-> name('product-images.update');
         Route::delete ('/product-images', [ProductImageController::class, 'destroy'])-> name('product-images.destroy');
 
@@ -153,7 +162,17 @@ Route::group(['prefix'=>'admin'], function(){
         Route::get ('/coupons/{coupon}/edit', [DiscountCodeController::class, 'edit'])-> name('coupons.edit');
         Route::put ('/coupons/{coupon}', [DiscountCodeController::class, 'update'])-> name('coupons.update');
         Route::delete ('/coupons/{coupon}', [DiscountCodeController::class, 'destroy'])-> name('coupons.delete');
-        // Route::get('/get-products',[ProductController::class,'getProducts'])->name('products.getProducts');
+
+        //OrderRoutes
+        Route::get('/orders', [OrderController::class, 'index'])-> name('orders.index');
+        Route::get('/orders/{id}', [OrderController::class, 'detail'])-> name('orders.detail');
+        Route::post('/order/change-status/{id}', [OrderController::class, 'changeOrderStatus'])-> name('orders.changeOrderStatus');
+        Route::post('/order/send-email/{id}', [OrderController::class, 'sendInvoiceEmail'])-> name('orders.sendInvoiceEmail');
+
+
+
+
+        
 
 
 
