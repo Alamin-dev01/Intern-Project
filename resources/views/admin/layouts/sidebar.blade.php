@@ -1,4 +1,4 @@
-<aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: rgb(47, 79, 79)">
+<aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: #2f4f4f">
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
         <img src="{{asset('admin-assets/img/1.jpg')}}" alt="Tree-Cart-Online-shop-logo" class="brand-image img-circle elevation-3" style="opacity: .8">
@@ -64,7 +64,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="users.html" class="nav-link">
+                    <a href="{{route('users.index')}}" class="nav-link">
                         <i class="nav-icon  fas fa-users"></i>
                         <p>Users</p>
                     </a>

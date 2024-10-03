@@ -16,6 +16,7 @@ class OrderController extends Controller
 
         if ($request->get('keyword') != "") 
         {
+
            $orders = $orders->where('users.name','like','%'.$request->keyword.'%');
            $orders = $orders->orWhere('users.email','like','%'.$request->keyword.'%');
            $orders = $orders->orWhere('users.id','like','%'.$request->keyword.'%');

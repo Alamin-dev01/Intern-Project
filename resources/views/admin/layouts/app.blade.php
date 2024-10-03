@@ -78,7 +78,7 @@
 				<!-- /.content -->
 			</div>
 			<!-- /.content-wrapper -->
-			<footer class="main-footer">
+			<footer class="main-footer" style="flex: 100%">
 				
 				<strong>Copyright &copy; 2024-2025 IUBAT||CODETREE All rights reserved.
 			</footer>

@@ -368,7 +368,32 @@ class CartController extends Controller
             $orderItem->total=$item->price*$item->qty;
             $orderItem->save();
 
+            //Update product stock
+
+
+            $productData = Product::find($item->id);
+
+            if ($productData) {
+                if ($productData->track_qty == 'Yes') {
+                    $currentQty = $productData->qty;
+                    $updateQty = $currentQty - $item->qty;
+                    $productData->qty = $updateQty;
+                    $productData->save();
+                }
+            } else {
+                // Handle the case where the product is not found
+                // For example, throw an exception or log an error
+                return response()->json(['error' => 'Product not found'], 404);
+            }
+            
+        
+
+
          }
+
+
+
+
             //Send order email
          orderEmail($order->id, 'customer');
 

@@ -67,12 +67,12 @@
 
 					
 				@endif
-				<form action="">					
+				<form action="{{route('front.shop')}}">					
 					<div class="input-group">
-						<input type="text" placeholder="Search For Products" class="form-control" aria-label="Amount (to the nearest dollar)">
-						<span class="input-group-text">
+						<input value="{{Request::get('search')}}" type="text" placeholder="Search For Products" class="form-control" name="search" id="search">
+						<button type="submit" class="input-group-text">
 							<i class="fa fa-search"></i>
-					  	</span>
+					  	</button>
 					</div>
 				</form>
 			</div>		
@@ -182,9 +182,6 @@
 	</div>
 </footer>
 <!-- Wishlist modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-	Launch demo modal
-  </button>
   
   <!-- Modal -->
   <div class="modal fade" id="wishlistModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -7,12 +7,14 @@ use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\DiscountCodeController;
 use App\Http\Controllers\admin\HomeController;
 use App\Http\Controllers\admin\OrderController;
+use App\Http\Controllers\admin\PageController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\ProductImageController;
 use App\Http\Controllers\admin\ProductSubCategoryController;
 use App\Http\Controllers\admin\ShippingController;
 use App\Http\Controllers\admin\SubCategoryController;
 use App\Http\Controllers\admin\TempImagesController;
+use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\FrontController;
@@ -76,6 +78,9 @@ Route::group(['prefix'=>'account'],function(){
     
     Route::group(['middleware'=>'auth'],function(){
         Route::get('/profile',[AuthController::class,'profile'])->name('account.profile');
+        Route::post('/update-profile',[AuthController::class,'updateProfile'])->name('account.updateProfile');
+        Route::post('/update-address',[AuthController::class,'updateAddress'])->name('account.updateAddress');
+
         Route::get('/my-orders',[AuthController::class,'orders'])->name('account.orders');
         Route::get('/my-wishlist',[AuthController::class,'wishlist'])->name('account.wishlist');
         Route::post('/remove-product-from-wishlist',[AuthController::class,'removeProductFromWishlist'])->name('account.removeProductFromWishlist');
@@ -172,11 +177,21 @@ Route::group(['prefix'=>'admin'], function(){
 
 
 
-        
+        //User routes
+        Route::get ('/users', [UserController::class, 'index'])-> name('users.index');
+        Route::get ('/users/create', [UserController::class, 'create'])-> name('users.create');
+        Route::post ('/users', [UserController::class, 'store'])-> name('users.store');
+        Route::get ('/users/{user}/edit', [UserController::class, 'edit'])-> name('users.edit');
+        Route::put ('/users/{user}', [UserController::class, 'update'])-> name('users.update');
+        Route::delete ('/users/{user}', [UserController::class, 'destroy'])-> name('users.delete');
 
-
-
-
+        //Page routes
+        Route::get ('/pages', [PageController::class, 'index'])-> name('pages.index');
+        Route::get ('/pages/create', [PageController::class, 'create'])-> name('pages.create');
+        Route::post ('/pages', [PageController::class, 'store'])-> name('pages.store');
+        Route::get ('/pages/{page}/edit', [PageController::class, 'edit'])-> name('pages.edit');
+        Route::put ('/pages/{page}', [PageController::class, 'update'])-> name('pages.update');
+        Route::delete ('/pages/{page}', [PageController::class, 'destroy'])-> name('pages.delete');
 
         //temp-image.create
 
