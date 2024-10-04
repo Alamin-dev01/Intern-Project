@@ -8,8 +8,8 @@
                 <!-- <img src="images/carousel-1.jpg" class="d-block w-100" alt=""> -->
 
                 <picture>
-                    <source media="(max-width: 799px)" srcset="{{asset('front-assets/images/carousel-1-m.jpg')}}" />
-                    <source media="(min-width: 800px)" srcset="{{asset('front-assets/images/carousel-1.jpg')}}" />
+                    <source media="(max-width: 799px)" srcset="{{asset('front-assets/images/carousel-1-m.png')}}" />
+                    <source media="(min-width: 800px)" srcset="{{asset('front-assets/images/carousel-1.png')}}" />
                     <img src="{{asset('front-assets/images/carousel-1.jpg')}}" alt="" />
                 </picture>
 
@@ -17,7 +17,7 @@
                     <div class="p-3">
                         <h1 class="display-4 text-white mb-3">Kids Fashion</h1>
                         <p class="mx-md-5 px-5">Lorem rebum magna amet lorem magna erat diam stet. Sadips duo stet amet amet ndiam elitr ipsum diam</p>
-                        <a class="btn btn-outline-light py-2 px-4 mt-3" href="#">Shop Now</a>
+                        <a class="btn btn-outline-light py-2 px-4 mt-3" href="{{route('front.shop')}}">Shop Now</a>
                     </div>
                 </div>
             </div>
@@ -69,25 +69,25 @@
         <div class="row">
             <div class="col-lg-3">
                 <div class="box shadow-lg">
-                    <div class="fa icon fa-check text-warning m-0 mr-3"></div>
+                    <div class="fa icon fa-check text-success m-0 mr-3"></div>
                     <h2 class="font-weight-semi-bold m-0">Quality Product</h5>
                 </div>                    
             </div>
             <div class="col-lg-3 ">
                 <div class="box shadow-lg">
-                    <div class="fa icon fa-shipping-fast text-warning m-0 mr-3"></div>
+                    <div class="fa icon fa-shipping-fast text-success m-0 mr-3"></div>
                     <h2 class="font-weight-semi-bold m-0">Free Shipping</h2>
                 </div>                    
             </div>
             <div class="col-lg-3">
                 <div class="box shadow-lg">
-                    <div class="fa icon fa-exchange-alt text-warning m-0 mr-3"></div>
+                    <div class="fa icon fa-exchange-alt text-success m-0 mr-3"></div>
                     <h2 class="font-weight-semi-bold m-0">14-Day Return</h2>
                 </div>                    
             </div>
             <div class="col-lg-3 ">
                 <div class="box shadow-lg">
-                    <div class="fa icon fa-phone-volume text-warning m-0 mr-3"></div>
+                    <div class="fa icon fa-phone-volume text-success m-0 mr-3"></div>
                     <h2 class="font-weight-semi-bold m-0">24/7 Support</h5>
                 </div>                    
             </div>
@@ -113,7 +113,7 @@
                     <div class="right">
                         <div class="cat-data">
                             <h2>{{$category->name}}</h2>
-                            <p>100 Products</p>
+                            <p></p>
                         </div>
                     </div>
                 </div>

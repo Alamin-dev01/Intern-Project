@@ -14,7 +14,7 @@
 <section class=" section-11 ">
     <div class="container  mt-5">
         <div class="row">
-           <div>
+           <div class="col-md-12">
             @include('front.account.common.message')
 
            </div>

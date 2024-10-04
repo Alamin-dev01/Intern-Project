@@ -3,19 +3,101 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
+use App\Models\Product;
+use App\Models\TempImage;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class HomeController extends Controller
 {
     public function index(){
-        return view('admin.Dashboard');
+
+        $totalOrders=Order::where('status', '!=', 'cancelled')->count();
+        $totalProducts=Product::count();
+        $totalCustomers=User::where('role',1)->count();
+        $totalRevenue=Order::where('status', '!=', 'cancelled')->sum('grand_total');
+
+        //This month revenue
+
+        $startOfMonth = Carbon::now()->startOfMonth()->format('Y-m-d');
+        $currentData = Carbon::now()->format('Y-m-d');
+
+        $revenueThisMonth=Order::where('status', '!=', 'cancelled')
+        ->whereDate('created_at','>=',$startOfMonth )
+        ->whereDate('created_at','<=',$currentData )
+        ->sum('grand_total');
+
+        //Last month revenue (I'm so tired)
+
+        $lastMothStartDate=Carbon::now()->subMonth()->startOfMonth()->format('Y-m-d');
+        $lastMothEndDate=Carbon::now()->subMonth()->endOfMonth()->format('Y-m-d');
+
+        $lastMothName= Carbon::now()->subMonth()->startOfMonth()->format('M');
+
+        $revenueLastMonth=Order::where('status', '!=', 'cancelled')
+        ->whereDate('created_at','>=',$lastMothStartDate )
+        ->whereDate('created_at','<=',$lastMothEndDate )
+        ->sum('grand_total');
+
+        //Last 30 days sales
+
+        $lastThirtyDayStartDate = Carbon::now()->subDays(30)->format('Y-m-d');
+
+        $revenueLastThirtyDays=Order::where('status', '!=', 'cancelled')
+        ->whereDate('created_at','>=',$lastThirtyDayStartDate )
+        ->whereDate('created_at','<=',$currentData )
+        ->sum('grand_total');
+
+        //Delete temp images here
+        $dayBeforeToday = Carbon::now()->subDays(1)->format('Y-m-d H:i:s');
+
+        $tempImages = TempImage::where('created_at','<=',$dayBeforeToday)->get();
+
+
+        foreach ($tempImages as $tempImage) {
+
+            $path = public_path('/temp/'. $tempImage->name);
+            
+            $thumbPath = public_path('/temp/thumb/'. $tempImage->name);
+
+            //Delete main image
+            if (File::exists($path)) {
+                File::delete($path);
+            }
+
+             //Delete thumb image
+             if (File::exists($thumbPath)) {
+                File::delete($thumbPath);
+            }
+
+
+            TempImage::where('id', $tempImage->id)->delete();
+           
+
+        }
+
+
+
+
+
+        return view('admin.Dashboard',[
+            'totalOrders' => $totalOrders,
+            'totalProducts' => $totalProducts,
+            'totalCustomers' => $totalCustomers,
+            'totalRevenue' => $totalRevenue,
+            'revenueThisMonth' => $revenueThisMonth,
+            'revenueLastMonth' => $revenueLastMonth,
+            'revenueLastThirtyDays' => $revenueLastThirtyDays,
+            'lastMothName' => $lastMothName,
+        ]);
 
         
-       //$admin= Auth::guard('admin')->user();
-        //echo 'Welcome' .$admin->name. '<a href="'.route('admin.logout').'">Logout</a>';
-        
+       
 
     }
 
