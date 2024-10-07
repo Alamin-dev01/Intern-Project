@@ -12110,12 +12110,12 @@ a.link:hover {
 
 .btn-dark {
     padding: 10px 20px;
-    background-color: #3b6554;
+    background-color: #062b1c;
     border-radius: 0px
 }
 
 .btn-dark:hover {
-    background-color: #38a856;
+    background-color: #0bb338;
     border-color: #38a856
 }
 
@@ -12177,11 +12177,11 @@ header .btn-dark:focus {
 }
 
 main {
-    background-color: #f1f1f1
+    background-color: #fff
 }
 
 .bg-light {
-    background-color: #f1f1f1 !important
+    background-color: #fff !important
 }
 
 .section-title {
